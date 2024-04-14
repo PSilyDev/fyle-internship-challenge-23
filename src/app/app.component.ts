@@ -62,6 +62,16 @@ export class AppComponent implements OnInit{
 
       this.apiService.getRepos(username).subscribe(
         (repoData: any[]) => {
+          repoData.forEach(repo => {
+            this.apiService.getRepoLanguages(repo.languages_url).subscribe(
+              (languagesData: any) => {
+                repo.languages = Object.keys(languagesData);
+              },
+              error => {
+                console.error('Error fetching repository languages:', error);
+              }
+            );
+          });
           this.repositories = repoData;
           this.loading = false;
         },

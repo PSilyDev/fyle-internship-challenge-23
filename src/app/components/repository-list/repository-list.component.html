@@ -1,11 +1,49 @@
 <div *ngIf="repositories && repositories.length > 0">
-    <h2>Repositories</h2>
-    <ul>
-        <li *ngFor="let repo of repositories">
-            <a [href]="repo.html_url" target="_blank">{{repo.name}}</a>
-        </li>
-    </ul>
-</div>
-<div *ngIf="!repositories || repositories.length === 0">
+  <div class="flex justify-between items-center mb-4">
+    <div>
+      <label for="pageSize">Page Size:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" class="bg-white border border-gray-300 rounded-md px-3 py-1">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="repository-list m-4">
+    <div class="grid grid-cols-2 gap-4">
+      <!-- Repository List Items -->
+      <div *ngFor="let repo of paginatedRepositories" class="bg-white rounded-lg shadow-md p-4 mb-4 repository-card">
+        <h3 class="font-bold text-lg">{{ repo.name }}</h3>
+        <p class="text-gray-700">{{ repo.description }}</p>
+        <div class="mt-2">
+          <!-- Languages as Badges -->
+          <ng-container *ngIf="repo.languages_url">
+            <!-- Fetch languages from languages_url -->
+            <div *ngIf="repo.languages && repo.languages.length > 0">
+              <span *ngFor="let lang of repo.languages" class="bg-gray-700 text-white text-xs font-semibold inline-block py-1 px-2 rounded-full mr-2">{{ lang }}</span>
+            </div>
+            <div *ngIf="!repo.languages || repo.languages.length === 0">
+              <span class="text-gray-700">No language specified</span>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!repo.languages_url">
+            <span class="text-gray-700">No language specified</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="flex justify-center items-center mt-4">
+      <button (click)="prevPage()" [disabled]="currentPage === 1" class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="bg-gray-700 text-white px-4 py-2 rounded ml-2">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="!repositories || repositories.length === 0">
     <p>No repositories found.</p>
+  </div>
 </div>
