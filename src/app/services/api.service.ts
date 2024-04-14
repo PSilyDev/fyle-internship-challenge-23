@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private personalAccessToken = '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';
+  private personalAccessToken = environment.personalAccessToken;
 
   constructor(
     private httpClient: HttpClient

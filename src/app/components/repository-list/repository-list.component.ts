@@ -61,6 +61,17 @@ export class RepositoryListComponent {
 
   pageSize: number = 10; // Default page size
 
+  languageColors: any = {
+    'JavaScript': 'bg-yellow-500',
+    'TypeScript': 'bg-blue-500',
+    'Python': 'bg-green-500',
+    'HTML': 'bg-red-500',
+    'CSS': 'bg-pink-500',
+    'PHP': 'bg-cyan-500'
+    // Add more languages and colors as needed
+  };
+  
+
   constructor() {
     this.currentPage = 1;
   }
@@ -92,6 +103,10 @@ export class RepositoryListComponent {
       this.currentPage++; // Increment currentPage
       this.pageChange.emit(this.currentPage); // Emit updated page number
     }
+  }
+
+  getLanguageClass(language: string): string {
+    return this.languageColors[language] || 'bg-gray-700'; // Default color if not found in mapping
   }
   
 }
