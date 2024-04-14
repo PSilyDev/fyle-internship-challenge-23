@@ -1,0 +1,11 @@
+<div *ngIf="repositories && repositories.length > 0">
+    <h2>Repositories</h2>
+    <ul>
+        <li *ngFor="let repo of repositories">
+            <a [href]="repo.html_url" target="_blank">{{repo.name}}</a>
+        </li>
+    </ul>
+</div>
+<div *ngIf="!repositories || repositories.length === 0">
+    <p>No repositories found.</p>
+</div>

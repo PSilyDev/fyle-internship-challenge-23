@@ -3,4 +3,33 @@
     Fyle Internship Challenge
   </div>
 </div> -->
-<app-search-bar></app-search-bar>
+<div>
+  <app-search-bar (searchClicked)="searchByUsername($event)"></app-search-bar>
+</div>
+
+<div *ngIf = "loading">Loading...</div>
+<div *ngIf = "error">{{error}}</div>
+
+<div *ngIf="!loading && !error">
+  <app-user-info
+    [profileImageUrl]="profileImageUrl"
+    [name]="name"
+    [bio]="bio"
+    [location]="location"
+    [xUrl]="xUrl"
+    [githubUrl]="githubUrl"
+  ></app-user-info>
+
+  <!-- <h2>User Data</h2>
+  <p>{{user}} - {{id}}</p> -->
+
+  <!-- <h2>Repositories</h2>
+  <ul>
+    <li *ngFor="let repo of repositories">
+      <a [href]="repo.html_url" target="_blank">{{repo.name}}</a>
+    </li>
+  </ul> -->
+  <div>
+    <app-repository-list [repositories]="repositories"></app-repository-list>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+
+.user-info {
+    @apply flex items-center;
+  }
+
+  .profile-image {
+    @apply w-36 h-36 rounded-full
+  }
+  
+  .user-details {
+    @apply ml-4;
+  }
+  
+  .user-details h2 {
+    @apply text-lg font-bold;
+  }
+  
+  .user-details p {
+    @apply text-sm;
+  }
+  
+  .user-details a {
+    @apply text-blue-600;
+  }
+  
