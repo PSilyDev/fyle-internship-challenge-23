@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { RepositoryListComponent } from './components/repository-list/repository-list.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
