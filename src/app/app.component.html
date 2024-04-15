@@ -1,8 +1,4 @@
-<!-- <div class="grid h-screen place-items-center">
-  <div class="font-bold text-3xl">
-    Fyle Internship Challenge
-  </div>
-</div> -->
+<!-- component 1 -->
 <div>
   <app-search-bar (searchClicked)="searchByUsername($event)"></app-search-bar>
 </div>
@@ -10,7 +6,9 @@
 <div *ngIf = "loading">Loading...</div>
 <div *ngIf = "error">{{error}}</div>
 
+<!-- component 2 -->
 <div *ngIf="!loading && !error">
+  
   <app-user-info
     [profileImageUrl]="profileImageUrl"
     [name]="name"
@@ -20,30 +18,16 @@
     [githubUrl]="githubUrl"
   ></app-user-info>
 
-  <!-- <h2>User Data</h2>
-  <p>{{user}} - {{id}}</p> -->
-
-  <!-- <h2>Repositories</h2>
-  <ul>
-    <li *ngFor="let repo of repositories">
-      <a [href]="repo.html_url" target="_blank">{{repo.name}}</a>
-    </li>
-  </ul> -->
-
-  <!-- Pagination Controls -->
+  <!-- component 3 -->
   <div>
     <app-repository-list [repositories]="repositories" [pageSize] = "pageSize" (pageSizeChange)="onPageSizeChange($event)"></app-repository-list>
   </div>
-  <!-- <div class="pagination-controls"> -->
-    <div class="flex justify-center items-center mt-4 mb-4">
+
+  <!-- pagination logic -->
+  <div class="flex justify-center items-center mt-4 mb-4">
     <button (click)="prevPage()" [disabled]="currentPage === 1" class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Previous</button>
     <span>Page {{ currentPage }}</span>
     <button (click)="nextPage()" class="bg-gray-700 text-white px-4 py-2 rounded ml-2">Next</button>
-
-    <!-- <div class="flex justify-center items-center mt-4">
-      <button (click)="prevPage()" [disabled]="currentPage === 1" class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="bg-gray-700 text-white px-4 py-2 rounded ml-2">Next</button>
-    </div> -->
   </div>
+
 </div>

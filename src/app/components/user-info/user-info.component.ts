@@ -6,6 +6,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent {
+
+  // receiving all data from parent
   @Input() profileImageUrl: string;
   @Input() name: string;
   @Input() bio: string;

@@ -7,6 +7,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SearchBarComponent implements OnInit {
   username: string;
+  
+  // emitting the click event
   @Output() searchClicked = new EventEmitter<string>();
 
   search(): void {

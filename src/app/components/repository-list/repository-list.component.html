@@ -1,7 +1,7 @@
 <div *ngIf="repositories && repositories.length > 0">
   <div class="flex justify-between items-center mb-4">
     <div class="flex justify-end w-full mr-4">
-      <!-- <label for="pageSize">Page Size:</label> -->
+      <!-- page size -->
       <select id="pageSize" (change)="pageSizeChanged($event)" class="bg-white border border-gray-300 rounded-md px-3 py-1">
         <option value="10">10</option>
         <option value="20">20</option>
@@ -13,14 +13,13 @@
 
   <div class="repository-list m-4">
     <div class="grid grid-cols-2 gap-4">
-      <!-- Repository List Items -->
+      <!-- display repo items in cards -->
       <div *ngFor="let repo of paginatedRepositories" class="bg-white rounded-lg shadow-md p-4 mb-4 repository-card">
         <h2 class="font-bold text-2xl text-sky-500">{{ repo.name }}</h2>
         <p class="text-gray-700 min-h-8 mt-2">{{ repo.description || ' ' }}</p>
         <div class="mt-2">
-          <!-- Languages as Badges -->
+          <!-- displaying languages as badges -->
           <ng-container *ngIf="repo.languages_url">
-            <!-- Fetch languages from languages_url -->
             <div *ngIf="repo.languages && repo.languages.length > 0">
               <span *ngFor="let lang of repo.languages" [ngClass]="getLanguageClass(lang)" class="bg-gray-700 text-white text-xs font-semibold inline-block py-2 px-4 rounded-lg mr-2 mb-2">{{ lang }}</span>
             </div>
@@ -35,14 +34,8 @@
       </div>
     </div>
 
-    <!-- Pagination Controls -->
-    <!-- <div class="flex justify-center items-center mt-4">
-      <button (click)="prevPage()" [disabled]="currentPage === 1" class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="bg-gray-700 text-white px-4 py-2 rounded ml-2">Next</button>
-    </div> -->
   </div>
-
+  <!-- if len of repo is 0 -->
   <div *ngIf="!repositories || repositories.length === 0">
     <p>No repositories found.</p>
   </div>
