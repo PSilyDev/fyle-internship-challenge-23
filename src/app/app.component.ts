@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.service';
 
-import { of } from 'rxjs';
 import { tap, startWith } from 'rxjs/operators';
 
 const CACHE_KEY = 'httpRepoCache';
@@ -51,13 +50,14 @@ export class AppComponent implements OnInit{
 
   searchByUsername(username: string): void {
     this.username = username;
+    this.currentPage = 1;
     this.loading = true;
     this.error = null;
 
     this.apiService.getUser(username).subscribe(
       (userdata: any) => {
         this.profileImageUrl = userdata.avatar_url;
-        this.name = userdata.name;
+        this.name = userdata.name || username;
         this.bio = userdata.bio;
         this.location = userdata.location;
         this.xUrl = userdata.twitter_username;
@@ -129,11 +129,17 @@ export class AppComponent implements OnInit{
   }
 
   nextPage(): void {
+    const totalRepositories = this.repositories.length;
+
+  // check if there are more repositories to fetch based on the total fetched repositories
+  if (totalRepositories % this.pageSize === 0) {
     this.currentPage++;
     this.fetchRepositories(this.username);
   }
+  }
 
   onPageSizeChange(newPageSize: number): void {
+    
     this.pageSize = newPageSize;
     this.currentPage = 1;
     this.fetchRepositories(this.username);

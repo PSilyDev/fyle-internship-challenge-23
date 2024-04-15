@@ -3,7 +3,12 @@
   <app-search-bar (searchClicked)="searchByUsername($event)"></app-search-bar>
 </div>
 
-<div *ngIf = "loading">Loading...</div>
+<div *ngIf="loading" class="flex justify-center items-center h-screen">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-4">Welcome</h1>
+    <p class="text-lg">Enter a GitHub username to explore their profile and repositories.</p>
+  </div>
+</div>
 <div *ngIf = "error">{{error}}</div>
 
 <!-- component 2 -->

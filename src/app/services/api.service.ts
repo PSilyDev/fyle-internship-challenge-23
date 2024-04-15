@@ -34,8 +34,8 @@ export class ApiService {
   }
 
   // private getHeaders(): HttpHeaders {
-  //   return new HttpHeaders({
-  //     'Authorization': `token ${this.personalAccessToken}`
-  //   });
+    // return new HttpHeaders({
+      // 'Authorization': `token ${this.personalAccessToken}`
+    // });
   // }
 }
