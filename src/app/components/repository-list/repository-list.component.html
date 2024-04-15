@@ -2,7 +2,7 @@
   <div class="flex justify-between items-center mb-4">
     <div class="flex justify-end w-full mr-4">
       <!-- <label for="pageSize">Page Size:</label> -->
-      <select id="pageSize" [(ngModel)]="pageSize" class="bg-white border border-gray-300 rounded-md px-3 py-1">
+      <select id="pageSize" (change)="pageSizeChanged($event)" class="bg-white border border-gray-300 rounded-md px-3 py-1">
         <option value="10">10</option>
         <option value="20">20</option>
         <option value="50">50</option>
@@ -36,11 +36,11 @@
     </div>
 
     <!-- Pagination Controls -->
-    <div class="flex justify-center items-center mt-4">
+    <!-- <div class="flex justify-center items-center mt-4">
       <button (click)="prevPage()" [disabled]="currentPage === 1" class="bg-gray-700 text-white px-4 py-2 rounded mr-2">Previous</button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="bg-gray-700 text-white px-4 py-2 rounded ml-2">Next</button>
-    </div>
+    </div> -->
   </div>
 
   <div *ngIf="!repositories || repositories.length === 0">

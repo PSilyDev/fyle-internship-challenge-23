@@ -1,4 +1,4 @@
-<div class="user-info">
+<div class="user-info" *ngIf="name !== ''">
     
     <img class="profile-image" [src]="profileImageUrl" alt="User Profile Image">
     
@@ -15,6 +15,7 @@
         <a [href]="xUrl" target="_blank">X: {{xUrl}}</a>
 
     </div>
+
 </div>
 <div class="url">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="link-icon">

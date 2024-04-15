@@ -56,10 +56,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class RepositoryListComponent {
   @Input() repositories: any[];
   @Input() currentPage: number;
+  @Input() pageSize: number;
 
-  @Output() pageChange = new EventEmitter<number>();
+  // @Output() pageChange = new EventEmitter<number>();
+  @Output() pageSizeChange = new EventEmitter<number>();
 
-  pageSize: number = 10; // Default page size
+  // pageSize: number = 10; // Default page size
 
   languageColors: any = {
     'JavaScript': 'bg-yellow-500',
@@ -74,15 +76,16 @@ export class RepositoryListComponent {
 
   constructor() {
     this.currentPage = 1;
+    this.pageSize = 10;
   }
 
   get totalRepositories(): number {
     return this.repositories ? this.repositories.length : 0;
   }
 
-  get totalPages(): number {
-    return Math.ceil(this.totalRepositories / this.pageSize);
-  }
+  // get totalPages(): number {
+  //   return Math.ceil(this.totalRepositories / this.pageSize);
+  // }
 
   get paginatedRepositories(): any[] {
     const startIndex = (this.currentPage - 1) * this.pageSize;
@@ -91,22 +94,27 @@ export class RepositoryListComponent {
     
   }
 
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.pageChange.emit(this.currentPage - 1);
-    }
-  }
+  // prevPage() {
+  //   if (this.currentPage > 1) {
+  //     this.currentPage--;
+  //     this.pageChange.emit(this.currentPage - 1);
+  //   }
+  // }
 
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++; // Increment currentPage
-      this.pageChange.emit(this.currentPage); // Emit updated page number
-    }
-  }
+  // nextPage() {
+  //   if (this.currentPage < this.totalPages) {
+  //     this.currentPage++; // Increment currentPage
+  //     this.pageChange.emit(this.currentPage); // Emit updated page number
+  //   }
+  // }
 
   getLanguageClass(language: string): string {
     return this.languageColors[language] || 'bg-gray-700'; // Default color if not found in mapping
+  }
+
+
+  pageSizeChanged(event: any) {
+    this.pageSizeChange.emit(event.target.value); // Emit the selected page size
   }
   
 }
