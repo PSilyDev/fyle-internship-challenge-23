@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.service';
+// import { startWith } from 'rxjs';
+
+import { of } from 'rxjs';
+import { tap, startWith } from 'rxjs/operators';
+
+const CACHE_KEY = 'httpRepoCache';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +13,7 @@ import { ApiService } from './services/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'fyle-frontend-challenge';
+  
   
   // User Details
   username: string
@@ -76,8 +82,47 @@ export class AppComponent implements OnInit{
     this.fetchRepositories(username);
   }
 
+  // fetchRepositories(username: string): void {
+  //   this.apiService.getRepos(username, this.currentPage, this.pageSize).subscribe(
+  //     (repoData: any[]) => {
+  //       repoData.forEach(repo => {
+  //         this.apiService.getRepoLanguages(repo.languages_url).subscribe(
+  //           (languagesData: any) => {
+  //             repo.languages = Object.keys(languagesData);
+  //           },
+  //           error => {
+  //             console.error('Error fetching repository languages:', error);
+  //           }
+  //         );
+  //       });
+  //       this.repositories = repoData;      
+  //       this.loading = false;
+  //     },
+  //     error => {
+  //       console.error('Error fetching repositories:', error);
+  //       this.error = 'Error fetching repositories';
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
+
+
   fetchRepositories(username: string): void {
-    this.apiService.getRepos(username, this.currentPage, this.pageSize).subscribe(
+    // Try to load from local storage
+    const storedValue = localStorage.getItem(CACHE_KEY);
+    if (storedValue) {
+      this.repositories = JSON.parse(storedValue);
+      this.loading = false;
+    }
+  
+    // Fetch from API
+    this.apiService.getRepos(username, this.currentPage, this.pageSize).pipe(
+      tap(repos => {
+        // Store the new value
+        localStorage.setItem(CACHE_KEY, JSON.stringify(repos));
+      }),
+      startWith(JSON.parse(localStorage.getItem(CACHE_KEY) || '[]'))
+    ).subscribe(
       (repoData: any[]) => {
         repoData.forEach(repo => {
           this.apiService.getRepoLanguages(repo.languages_url).subscribe(
@@ -89,7 +134,7 @@ export class AppComponent implements OnInit{
             }
           );
         });
-        this.repositories = repoData;
+        this.repositories = repoData;      
         this.loading = false;
       },
       error => {
@@ -132,7 +177,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     // Initial data fetching on component initialization
-    // this.apiService.getUser('johnpapa').subscribe(console.log);
+    // /this.apiService.getUser('johnpapa').subscribe(console.log);
     // this.apiService.getRepos('johnpapa').subscribe(console.log);
   }
 
